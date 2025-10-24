@@ -1,9 +1,10 @@
 @Library('my-shared-library') _
+
 pipeline {
-    agent {label 'local-agent'}
+    agent { label 'local-agent' }
 
     environment {
-	    IMAGE_NAME = 'ayoobki/maven-app' 
+        IMAGE_NAME = 'ayoobki/maven-app'
     }
 
     stages {
@@ -18,9 +19,11 @@ pipeline {
                 sh 'mvn clean package'
             }
         }
-	}
+    }
+
     post {
-        notifyPost()
-        
+        always {
+            notifyPost()
+        }
     }
 }
