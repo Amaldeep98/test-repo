@@ -18,9 +18,9 @@ pipeline {
                 sh 'mvn clean package'
             }
         }
-
-    	post {
-        	notifyPost()
-        }
+	}
+    post {
+        notifyPost()
+        
     }
 }
