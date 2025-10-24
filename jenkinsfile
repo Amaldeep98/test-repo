@@ -1,3 +1,4 @@
+@Library('my-shared-library') _
 pipeline {
     agent {label 'local-agent'}
 
@@ -8,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: https://github.com/Amaldeep98/Memory-Monster.git', branch: 'master'
+                git url: 'https://github.com/Amaldeep98/Memory-Monster.git', branch: 'master'
             }
         }
 
@@ -18,36 +19,8 @@ pipeline {
             }
         }
 
-    post {
-        success {
-            mail to: 'ayoobkibrahim109@gmail.com',
-                subject: "✅ SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: """Good news! The pipeline succeeded.
-             
-                • Job: ${env.JOB_NAME}
-                • Build Number: ${env.BUILD_NUMBER}
-                • URL: ${env.BUILD_URL}
-                """
-        }
-        failure {
-            mail to: 'ayoobkibrahim109@gmail.com',
-                subject: "❌ FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: """The pipeline failed.
-             
-                • Job: ${env.JOB_NAME}
-                • Build URL: ${env.BUILD_URL}
-                • Check console logs for error details.
-                """
-        }
-        aborted {
-            mail to: 'ayoobkibrahim109@gmail.com',
-                subject: "🚫 ABORTED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: """The build was manually aborted.
-             
-                • Job: ${env.JOB_NAME}
-                • URL: ${env.BUILD_URL}
-                • Check if it was canceled intentionally.
-                """
+    	post {
+        	notifyPost()
         }
     }
 }
